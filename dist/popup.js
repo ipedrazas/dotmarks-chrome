@@ -26,31 +26,9 @@ function addBookmark() {
      // The URL to POST our data to
     var postUrl = 'http://api.dotmarks.net/dotmarks';
 
-
-    // chrome.storage.local.get({
-    //     username: '',
-    //     token: ''
-    //   }, function(items) {
-    //     user = items.username;
-    //     token = items.token;
-    //     // postUrl = items.url;
-    //   });
-
     // Set up an asynchronous AJAX POST request
     var xhr = new XMLHttpRequest();
     xhr.open('POST', postUrl, true);
-
-    // console.log(decode64(token));
-    // console.log(token);
-
-    // if(token === ''){
-    //     console.log("empty")
-    //     chrome.storage.local.set({
-    //         location: 'popup.html'
-    //     },
-    //         navigate(location)
-    //     );
-    // }
 
     // Prepare the data to be POSTed
     var title = document.getElementById('title').value.trim();
@@ -76,7 +54,7 @@ function addBookmark() {
             } else if(xhr.status === 0){
               statusDisplay.innerHTML = 'Error: dotMarks is unreachable!';
               timeOut = 2500;
-            }
+            // }
             // else if(xhr.status === 401){
             //     chrome.storage.local.set({
             //         location: 'popup.html'
@@ -103,7 +81,7 @@ function addBookmark() {
 
     xhr.send(serializeObject(title, url, tags));
     statusDisplay.innerHTML = 'Saving...';
-}
+};
 
  function serializeObject(title, url, tags){
     var o = {};
