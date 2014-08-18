@@ -24,7 +24,7 @@ function addBookmark() {
     var password = "";
     var token = "";
      // The URL to POST our data to
-    var postUrl = 'http://api.dotmarks.net/dotmarks';
+    var postUrl = 'https://api.dotmarks.net/dotmarks';
 
     // Set up an asynchronous AJAX POST request
     var xhr = new XMLHttpRequest();
@@ -85,7 +85,7 @@ function addBookmark() {
 
  function serializeObject(title, url, tags){
     var o = {};
-    // o['username'] = user;
+    o['username'] = 'ivan';
     o['url'] = url;
     o['source'] = 'chrome';
     if(tags !== undefined) {
