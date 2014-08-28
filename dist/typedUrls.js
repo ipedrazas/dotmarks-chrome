@@ -35,19 +35,17 @@ function createParseDateObject(dateInMilis){
 
 // Search history to find up to ten links that a user has typed in,
 // and show those links in a popup.
-function buildTypedUrlList(divName) {
-  // To look for history items visited in the last week,
-  // subtract a week of microseconds from the current time.
-  var microsecondsPerWeek = 1000 * 60 * 60 * 24 * 7;
-  var oneWeekAgo = (new Date).getTime() - microsecondsPerWeek;
+function buildTypedUrlList(startTime, endTime) {
 
   // Track the number of callbacks from chrome.history.getVisits()
   // that we expect to get.  When it reaches zero, we have all results.
   var numRequestsOutstanding = 0;
 
   chrome.history.search({
-      'text': '',              // Return every history item....
-      'startTime': oneWeekAgo  // that was accessed less than one week ago.
+        'text': '',              // Return every history item....
+        'startTime': startTime,
+        'endTime': endTime,
+        'maxResults': 0
     },
     function(historyItems) {
       // For each history item, get details on all visits.
@@ -101,20 +99,34 @@ function buildTypedUrlList(divName) {
 
   // This function is called when we have the final list of URls to display.
   var onAllVisitsProcessed = function() {
-    console.log("historyObjects");
-    historyObjects.sort(function(a,b){
-      return a.visitCount - b.visitCount;
-    })
-    console.log(historyObjects);
-    console.log("bkms");
-    bkms.sort(function(a,b){
-      return a.visitCount - b.visitCount;
-    })
-    console.log(bkms);
-
+    // console.log("historyObjects");
+    // historyObjects.sort(function(a,b){
+    //   return a.visitCount - b.visitCount;
+    // })
+    // console.log(historyObjects);
+    // historyObjects = new Array();
+    if(bkms.length > 0){
+        console.log("bkms");
+        bkms.sort(function(a,b){
+          return a.visitCount - b.visitCount;
+        })
+        console.log(bkms.length);
+        bkms = new Array();
+    }
   };
 }
 
 document.addEventListener('DOMContentLoaded', function () {
-  buildTypedUrlList("typedUrl_div");
+
+  var step = 10;
+  for(var i=0; i<10; ++i){
+      var endDate = 1000 * 60 * 60 * 24 * i*step;
+      var startDate = 1000 * 60 * 60 * 24 *(step*(i+1));
+      var endTime = (new Date).getTime() - endDate;
+      var startTime = (new Date).getTime() - startDate;
+      if(startDate > endDate){
+        buildTypedUrlList(startTime, endTime);
+      }
+    }
+
 });
