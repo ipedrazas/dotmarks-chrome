@@ -1,4 +1,5 @@
 var bkms = new Array();
+var allVisits = new Array();
 var historyObjects = new Array();
 
 
@@ -83,6 +84,9 @@ function buildTypedUrlList(startTime, endTime) {
         visit['time'] = createParseDateObject(visitItems[i].visitTime);
         visit['vid'] = visitItems[i].referringVisitId
         visit['vid'] = visitItems[i].transition;
+        var visitItem = JSON.parse(JSON.stringify(historyItem));;
+        visitItem['time'] = visit;
+        allVisits.push(visitItem);
         visits.push(visit);
     }
 
@@ -107,11 +111,16 @@ function buildTypedUrlList(startTime, endTime) {
     // historyObjects = new Array();
     if(bkms.length > 0){
         console.log("bkms");
-        bkms.sort(function(a,b){
-          return a.visitCount - b.visitCount;
-        })
+        // bkms.sort(function(a,b){
+        //   return a.visitCount - b.visitCount;
+        // })
         console.log(bkms.length);
         bkms = new Array();
+    }
+    if(allVisits.length>0){
+      console.log("All Visits");
+      console.log(allVisits.length);
+      // allVisits = new Array();
     }
   };
 }
