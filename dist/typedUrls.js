@@ -18,21 +18,20 @@ function addBookmark(bulk) {
 function createObject(historyItem){
   // console.log(historyItem);
   var o = {};
-    o['user'] = 'test';
+    o['user'] = 'ivan_test';
     o['url'] = historyItem.url;
     if(historyItem.title !== undefined) {
         o['title'] = historyItem.title;
     }
     o['visitCount'] = historyItem.visitCount;
     o['typedCount'] = historyItem.typedCount;
-    o['time'] = createParseDateObject(historyItem.lastVisitTime);
+    // o['time'] = createParseDateObject(historyItem.lastVisitTime);
 
   return o;
 }
 
-function createParseDateObject(dateInMilis){
+function createParseDateObject(dateInMilis, time){
     var visit_time = new Date(dateInMilis);
-    var time = {};
     time['time'] = visit_time;
     time['vtime'] = dateInMilis;
     time['year'] = visit_time.getFullYear();
@@ -92,12 +91,12 @@ function buildTypedUrlList(startTime, endTime) {
     var visits = new Array();
     for (var i = 0, ie = visitItems.length; i < ie; ++i) {
         var visit = {};
-        visit['vid'] = visitItems[i].visitId;
-        visit['time'] = createParseDateObject(visitItems[i].visitTime);
-        visit['vid'] = visitItems[i].referringVisitId
-        visit['vid'] = visitItems[i].transition;
-        var visitItem = JSON.parse(JSON.stringify(historyItem));;
-        visitItem['time'] = visit;
+        var time = createParseDateObject(visitItems[i].visitTime, visitItems[i]);
+        var visitItem = JSON.parse(JSON.stringify(historyItem));
+        visitItem['vid'] = visitItems[i].visitId;
+        visitItem['referringVisitId'] = visitItems[i].referringVisitId
+        visitItem['transition'] = visitItems[i].transition;
+        visitItem['time'] = time;
         visitItem['visitNumber'] = i;
         allVisits.push(visitItem);
         visits.push(visit);
@@ -116,6 +115,20 @@ function buildTypedUrlList(startTime, endTime) {
 
   // This function is called when we have the final list of URls to display.
   var onAllVisitsProcessed = function() {
+    // console.log("historyObjects");
+    // historyObjects.sort(function(a,b){
+    //   return a.visitCount - b.visitCount;
+    // })
+    // console.log(historyObjects);
+    // historyObjects = new Array();
+    // if(bkms.length > 0){
+    //     console.log("bkms");
+    //     bkms.sort(function(a,b){
+    //       return a.visitCount - b.visitCount;
+    //     })
+    //     console.log(bkms.length);
+    //     bkms = new Array();
+    // }
     if(allVisits.length>0){
       console.log("All Visits");
       console.log(allVisits.length);
