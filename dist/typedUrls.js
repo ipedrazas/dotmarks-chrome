@@ -1,12 +1,24 @@
 var bkms = new Array();
-var allVisits = new Array();
 var historyObjects = new Array();
+var allVisits = new Array();
 
+// POST the data to the server using XMLHttpRequest
+function addBookmark(bulk) {
+     // The URL to POST our data to
+    var postUrl = 'https://api.dotmarks.net/history';
+
+    // Set up an asynchronous AJAX POST request
+    var xhr = new XMLHttpRequest();
+    xhr.open('POST', postUrl, true);
+    // Set correct header for form data
+    xhr.setRequestHeader('Content-type', 'application/json');
+    xhr.send(JSON.stringify(bulk));
+};
 
 function createObject(historyItem){
   // console.log(historyItem);
   var o = {};
-    o['user'] = 'ivan';
+    o['user'] = 'test';
     o['url'] = historyItem.url;
     if(historyItem.title !== undefined) {
         o['title'] = historyItem.title;
@@ -86,6 +98,7 @@ function buildTypedUrlList(startTime, endTime) {
         visit['vid'] = visitItems[i].transition;
         var visitItem = JSON.parse(JSON.stringify(historyItem));;
         visitItem['time'] = visit;
+        visitItem['visitNumber'] = i;
         allVisits.push(visitItem);
         visits.push(visit);
     }
@@ -103,24 +116,12 @@ function buildTypedUrlList(startTime, endTime) {
 
   // This function is called when we have the final list of URls to display.
   var onAllVisitsProcessed = function() {
-    // console.log("historyObjects");
-    // historyObjects.sort(function(a,b){
-    //   return a.visitCount - b.visitCount;
-    // })
-    // console.log(historyObjects);
-    // historyObjects = new Array();
-    if(bkms.length > 0){
-        console.log("bkms");
-        // bkms.sort(function(a,b){
-        //   return a.visitCount - b.visitCount;
-        // })
-        console.log(bkms.length);
-        bkms = new Array();
-    }
     if(allVisits.length>0){
       console.log("All Visits");
       console.log(allVisits.length);
-      // allVisits = new Array();
+      console.log(allVisits);
+      addBookmark(allVisits);
+      allVisits = new Array();
     }
   };
 }
@@ -128,7 +129,7 @@ function buildTypedUrlList(startTime, endTime) {
 document.addEventListener('DOMContentLoaded', function () {
 
   var step = 10;
-  for(var i=0; i<10; ++i){
+  for(var i=0; i<11; ++i){
       var endDate = 1000 * 60 * 60 * 24 * i*step;
       var startDate = 1000 * 60 * 60 * 24 *(step*(i+1));
       var endTime = (new Date).getTime() - endDate;
