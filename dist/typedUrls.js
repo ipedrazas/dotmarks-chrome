@@ -15,11 +15,21 @@ function addBookmark(bulk) {
     xhr.send(JSON.stringify(bulk));
 };
 
+function cleanUp(url) {
+    if(url.search(/^https?\:\/\//) != -1)
+        url = url.match(/^https?\:\/\/([^\/?#]+)(?:[\/?#]|$)/i, "");
+    else
+        url = url.match(/^([^\/?#]+)(?:[\/?#]|$)/i, "");
+    url[1] = url[1].replace(/^www\./i, "");
+    return url[1];
+}
+
 function createObject(historyItem){
   // console.log(historyItem);
   var o = {};
     o['user'] = 'ivan_test';
     o['url'] = historyItem.url;
+    o['domain'] = cleanUp(historyItem.url);
     if(historyItem.title !== undefined) {
         o['title'] = historyItem.title;
     }

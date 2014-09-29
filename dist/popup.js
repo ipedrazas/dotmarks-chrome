@@ -89,10 +89,10 @@ function addBookmark() {
     o['url'] = url;
     o['source'] = 'chrome';
     if(tags !== undefined) {
-        var aTags = tags.toLowerCase().split(" ");
+        var aTags = tags.split(",");
         if(aTags.length >= 1){
             if(aTags[0].length > 1){
-                o['tags'] = aTags;
+                o['tags'] = aTags.toLowerCase().trim();
             }
         }
 
