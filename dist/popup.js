@@ -10,19 +10,12 @@ function onPageInfo(o)  {
 // Global reference to the status display SPAN
 var statusDisplay = null;
 
-// function navigate(url){
-//     console.log('navigate to ' + url);
-//     location.href = "login.html";
-// }
 
 // POST the data to the server using XMLHttpRequest
 function addBookmark() {
     // Cancel the form submit
     event.preventDefault();
 
-    var user = "";
-    var password = "";
-    var token = "";
      // The URL to POST our data to
     var postUrl = 'https://api.dotmarks.net/dotmarks';
 
@@ -87,12 +80,12 @@ function addBookmark() {
     var o = {};
     o['username'] = 'ivan';
     o['url'] = url;
-    o['source'] = 'chrome';
+    o['source'] = 'chrome-e';
     if(tags !== undefined) {
-        var aTags = tags.split(",");
+        var aTags = tags.toLowerCase().split(",");
         if(aTags.length >= 1){
             if(aTags[0].length > 1){
-                o['tags'] = aTags.toLowerCase().trim();
+                o['tags'] = aTags;
             }
         }
 

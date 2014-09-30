@@ -4,7 +4,7 @@
     "description": "Save dotMarks to a remote endpoint.",
     "version": "0.1",
     "background": {
-        "scripts": ["background.js"],
+        "scripts": ["background.js", "rightclick.js"],
         "persistent": true
     },
     "browser_action": {
@@ -20,6 +20,6 @@
         "tabs",
         "http://*/",
         "https://*/",
-        "storage"
+        "contextMenus"
     ]
 }
