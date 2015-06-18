@@ -18,7 +18,7 @@ function genericOnClick(info, tab) {
 
 function sendDotMark(dotmark){
      // The URL to POST our data to
-    var postUrl = 'https://api.dotmarks.net/dotmarks';
+    var postUrl = 'http://api.dotmarks.net/dotmarks';
 
     // Set up an asynchronous AJAX POST request
     var xhr = new XMLHttpRequest();

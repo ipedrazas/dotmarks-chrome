@@ -5,7 +5,7 @@ var allVisits = new Array();
 // POST the data to the server using XMLHttpRequest
 function addBookmark(bulk) {
      // The URL to POST our data to
-    var postUrl = 'https://api.dotmarks.net/history';
+    var postUrl = 'http://api.dotmarks.net/history';
 
     // Set up an asynchronous AJAX POST request
     var xhr = new XMLHttpRequest();
